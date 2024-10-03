@@ -20,8 +20,12 @@ app.use(connectLiveReload());
 // Servir arquivos estáticos
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.get('/', (req, res) => {
+app.get('/admin', (req, res) => {
     res.sendFile(path.join(__dirname, 'admin', 'index.html'));
+});
+
+app.get('/admin/denuncias', (req, res) => {
+    res.sendFile(path.join(__dirname, 'admin', 'denuncias.html'));
 });
 
 const PORT = process.env.PORT || 3000;
