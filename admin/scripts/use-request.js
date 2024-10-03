@@ -7,7 +7,7 @@ function useRequest() {
 		.then(response => response.json())
 		.then(response => resolve(response))
 		.catch(error => reject(error))
-	)
+	);
 
 	const post = (url, body) => new Promise((resolve, reject) => fetch(url, {
 			method: 'POST',
@@ -16,20 +16,35 @@ function useRequest() {
 		})
 		.then(response => resolve(response))
 		.catch(error => reject(error))
-	)
+	);
 
-	const listarSetores = () => get(`${baseUrl}/setores`)
+	const listarSetores = () => get(`${baseUrl}/setores`);
 
-	const criarSetor = (body) => post(`${baseUrl}/setores`, body)
+	const criarSetor = (body) => post(`${baseUrl}/setores`, body);
 
-	const listarFuncionarios = (setor) => get(`${baseUrl}/setores/${setor}/funcionarios`)
+	const listarFuncionarios = (setor) => get(`${baseUrl}/setores/${setor}/funcionarios`);
 
-	const criarFuncionario = (body) => post(`${baseUrl}/funcionarios`, body)
+	const criarFuncionario = (body) => post(`${baseUrl}/funcionarios`, body);
+
+	const buscaSetor = (codigo) => get(`${baseUrl}/setores/${codigo}`)
+
+	const listarDenuncias = (setor, dataCriacao) => {
+		console.log(dataCriacao)
+		let url = `${baseUrl}/denuncias/${setor}`;
+
+		if (dataCriacao) {
+			url += `?data=${dataCriacao}`;
+		}
+
+		return get(url)
+	};
 
 	return {
 		listarSetores,
 		criarSetor,
 		listarFuncionarios,
-		criarFuncionario
+		criarFuncionario,
+		listarDenuncias,
+		buscaSetor
 	}
 }

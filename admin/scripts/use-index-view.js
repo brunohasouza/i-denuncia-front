@@ -16,9 +16,15 @@ function useIndexView() {
 				<div class="card-body">
 					<p class="card-text descricao">${setor.descricao}</p>
 				</div>
-				<div class="card-footer d-flex justify-content-end gap-2">
-					<button class="btn btn-outline-light btn-sm" onclick="abrirModalFuncionarios(${setor.codigo})">Funcionários</button>
-					<a class="btn btn-outline-light btn-sm" href="/admin/denuncias?setor=${setor.codigo}">Denúncias</a>
+				<div class="card-footer d-flex justify-content-end gap-4">
+					<button class="btn btn-outline-light btn-sm position-relative" onclick="abrirModalFuncionarios(${setor.codigo})">
+						<span class="badge text-bg-light">${setor.funcionarios}</span>
+						Funcionários
+					</button>
+					<a class="btn btn-outline-light btn-sm position-relative" href="/admin/denuncias?setor=${setor.codigo}">
+						<span class="badge text-bg-light">${setor.denuncias}</span>
+						Denúncias
+					</a>
 				</div>
 			</div>
 		</div>	

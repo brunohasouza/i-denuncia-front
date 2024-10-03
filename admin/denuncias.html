@@ -35,7 +35,10 @@
 					<input class="form-control" name="data" type="date" required id="filtro-data" />
 				</div>
 				<div class="col-auto">
-					<button class="btn btn-primary">Filtrar</button>
+					<button type="submit" class="btn btn-primary">Filtrar</button>
+				</div>
+				<div class="col-auto">
+					<button type="reset" class="btn btn-secondary">Resetar</button>
 				</div>
 			</form>
 		</div>
@@ -43,72 +46,59 @@
 		</div>
 	</main>
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+	<script src="use-request.js"></script>
+	<script src="use-denuncias-view.js"></script>
 	<script>
-		const container = document.querySelector('#denuncias')
-		const denunciaNome = document.querySelector('#denuncia-setor')
-		const denunciasContador = document.querySelector('#denuncias-contador')
-		const formFiltrar = document.querySelector('#form-filtrar')
-		const setor = {
-			nome: 'Montagem de motores'
-		}
-		const denuncias = Array(Math.round(Math.random() * 30)).fill(false).map(() => ({
-			codigo: 1,
-			funcionario: {
-				nome: 'Jéssica Isabella Teresinha da Rosa',
-			},
-			denuncia: {
-				nome: 'Falha de equipamento'
-			},
-			dataCriacao: '2024-10-01'
-		}))
+		const container = document.querySelector('#denuncias');
+		const denunciaNome = document.querySelector('#denuncia-setor');
+		const denunciasContador = document.querySelector('#denuncias-contador');
+		const formFiltrar = document.querySelector('#form-filtrar');
+		const { listarDenuncias, buscaSetor } = useRequest();
+		const { desenhaDenuncias } = useDenunciasView();
 
 		formFiltrar.addEventListener('submit', (ev) => {
-			ev.preventDefault()
+			ev.preventDefault();
 
-			const searchParams = new URLSearchParams(location.search)
-			searchParams.set('data', formFiltrar.data.value)
-			location.href = `${location.origin}${location.pathname}?${searchParams.toString()}`
+			const searchParams = new URLSearchParams(location.search);
+			searchParams.set('data', formFiltrar.data.value);
+			location.href = `${location.origin}${location.pathname}?${searchParams.toString()}`;
+		})
+
+		formFiltrar.addEventListener('reset', () => {
+			const searchParams = new URLSearchParams(location.search);
+			searchParams.delete('data');
+			location.href = `${location.origin}${location.pathname}?${searchParams.toString()}`;
 		})
 
 		window.addEventListener('load', function() {
-			const searchParams = new URLSearchParams(location.search)
+			const searchParams = new URLSearchParams(location.search);
+			const setorCodigo = searchParams.get('setor');
+			const filtroData = searchParams.get('data');
 
-			if (!searchParams.get('setor')) {
-				return location.replace('/admin')
+			if (!setorCodigo) {
+				return location.replace('/admin');
 			}
 
-			denunciaNome.innerHTML = setor.nome
-			denunciasContador.innerHTML = `Total de denúncias: ${denuncias.length}`
-
-			if (denuncias.length === 0) {
-				container.innerHTML = `
-					<div class="alert alert-secondary mb-0" role="alert">Nenhum funcionário cadastrado</div>
-				`
-				return
+			if (filtroData) {
+				formFiltrar.data.value = filtroData;
 			}
 
-			container.innerHTML = `
-				<table class="table table-bordered table-striped">
-					<thead>
-						<tr>
-							<th style="width: 76px">Código</th>
-							<th>Funcionário</th>
-							<th style="width: 256px">Denúncia</th>
-							<th style="width: 112px">Data</th>
-						</tr>
-					</thead>
-					<tbody>
-						${denuncias.map(denuncia => `
-							<tr>
-								<td class="text-end py-3">${denuncia.codigo}</td>
-								<td class="py-3">${denuncia.funcionario.nome}</td>
-								<td class="py-3">${denuncia.denuncia.nome}</td>
-								<td class="py-3">${denuncia.dataCriacao}</td>
-							</tr>
-						`).join('')}
-					</tbody>
-				</table>			
-			`
+			buscaSetor(setorCodigo)
+				.then(setor => {
+					denunciaNome.innerHTML = setor.nome;
+					denunciasContador.innerHTML = `Total de denúncias: ${setor.denuncias}`;
+				})
+				.catch(error => {
+					console.error(error);
+					location.replace('/admin');
+				});
+
+			listarDenuncias(setorCodigo, filtroData || '')
+				.then(denuncias => container.innerHTML = desenhaDenuncias(denuncias))
+				.catch(error => {
+					console.error(error);
+					desenhaDenuncias([]);
+				});
 		})
 	</script>
 </body>
