@@ -41,39 +41,21 @@
 		</div>
 	</main>
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+	<script src="use-index-view.js"></script>
+	<script src="use-request.js"></script>
 	<script>
 		const container = document.querySelector('#setores');
-		const setores = Array(Math.round(Math.random() * 30))
-			.fill(false)
-			.map(() => ({
-				codigo: 1,
-				nome: 'Estamparia',
-				descricao: 'Onde as chapas de metal são cortadas e moldadas para formar as partes da carroceria do veículo.',
-				cor: 'blue'
-			}))
+		const { listarSetores } = useRequest();
+		const { desenhaSetores } = useIndexView()
 
 		window.addEventListener('load', function() {
-			container.innerHTML = `
-				<div class="col-12">
-					<div class="alert alert-secondary mb-0" role="alert">
-						Nenhum setor cadastrado
-					</div>
-				</div>
-			`
-			container.innerHTML += setores.map(setor => `
-				<div class="col-12 col-md-6">
-					<div class="card" style="background-color: ${setor.cor}">
-						<h5 class="card-header">${setor.nome}</h5>
-						<div class="card-body">
-							<p class="card-text descricao">${setor.descricao}</p>
-						</div>
-						<div class="card-footer d-flex justify-content-end gap-2">
-							<a class="btn btn-outline-light btn-sm" href="/client/denunciar?setor=${setor.codigo}">Criar Denúncia</a>
-						</div>
-					</div>
-				</div>			
-			`).join('')
-		})
+			listarSetores()
+				.then(setores => container.innerHTML = desenhaSetores(setores))
+				.catch(error => {
+					console.error(error)
+					container.innerHTML = desenhaSetores([])
+				});
+		});
 	</script>
 </body>
 </html>

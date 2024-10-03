@@ -20,30 +20,7 @@ function useRequest() {
 
 	const listarSetores = () => get(`${baseUrl}/setores`);
 
-	const criarSetor = (body) => post(`${baseUrl}/setores`, body);
-
-	const listarFuncionarios = (setor) => get(`${baseUrl}/setores/${setor}/funcionarios`);
-
-	const criarFuncionario = (body) => post(`${baseUrl}/funcionarios`, body);
-
-	const buscaSetor = (codigo) => get(`${baseUrl}/setores/${codigo}`);
-
-	const listarDenuncias = (setor, dataCriacao) => {
-		let url = `${baseUrl}/denuncias/${setor}`;
-
-		if (dataCriacao) {
-			url += `?data=${dataCriacao}`;
-		}
-
-		return get(url)
-	};
-
 	return {
-		listarSetores,
-		criarSetor,
-		listarFuncionarios,
-		criarFuncionario,
-		listarDenuncias,
-		buscaSetor
+		listarSetores
 	}
 }
