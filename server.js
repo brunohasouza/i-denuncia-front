@@ -28,6 +28,14 @@ app.get('/admin/denuncias', (req, res) => {
     res.sendFile(path.join(__dirname, 'admin', 'denuncias.html'));
 });
 
+app.get('/client', (req, res) => {
+    res.sendFile(path.join(__dirname, 'client', 'index.html'));
+});
+
+app.get('/client/denunciar', (req, res) => {
+    res.sendFile(path.join(__dirname, 'client', 'denunciar.html'));
+});
+
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
     console.log(`Servidor rodando na porta ${PORT}`);
