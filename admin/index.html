@@ -1,10 +1,285 @@
-<html lang="en">
+<html lang="en" data-bs-theme="dark">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>iDenuncia - Admin</title>
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+	<style>
+		.descricao {
+			display: -webkit-box;
+			line-clamp: 3;
+			-webkit-box-orient: vertical;  
+			overflow: hidden;
+			height: 72px;
+		}
+
+		#message {
+			padding-top: 16px;
+		}
+
+		#message:empty {
+			padding-top: 0;
+		}
+	</style>
 </head>
 <body>
-  
+	<header class="container-fluid border-bottom py-4 mb-4">
+		<div class="container">
+			<div class="row row align-items-center justify-content-between">
+				<div class="col-auto">
+					<p class="fs-1 lh-1 mb-0 fw-medium">iDenuncia</p>
+					<p class="mb-0 fs-6 lh-1 fw-lighter text-uppercase text-end text-body-secondary">Admin</p>
+				</div>
+				<nav class="col-auto">
+					<div class="d-flex gap-3">
+						<button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#modal-setor">
+							<i class="bi bi-building-add"></i>
+							Novo Setor
+						</button>
+						<button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#modal-funcionario">
+							<i class="bi bi-person-add"></i>
+							Novo Funcionário
+						</button>
+					</div>
+				</nav>
+			</div>
+		</div>
+	</header>
+	<main class="pb-5">
+		<div class="container mb-4">
+			<h1 class="display-6 fw-normal text-center mb-0">Setores</h1>
+			<div id="message">
+				<div class="alert alert-success" role="alert">
+					Setor cadastrado com sucesso
+			  	</div>
+			</div>
+		</div>
+		<div class="container">
+			<div class="row g-3" id="setores">
+			</div>
+		</div>
+	</main>
+	<div class="modal fade" id="modal-setor" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h1 class="modal-title fs-5" id="staticBackdropLabel">Novo setor</h1>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+				<form id="form-setor" class="mb-0">
+					<div class="modal-body">
+						<div class="mb-3">
+							<label for="setor-nome" class="form-label">Nome</label>
+							<input required id="setor-nome" name="nome" type="text" class="form-control" placeholder="Ex.: Setor de motores"/>
+						</div>
+						<div class="mb-3">
+							<label for="setor-cor" class="form-label">Cor</label>
+							<input required id="setor-cor" name="cor" type="color" class="form-control form-control-color"/>
+						</div>
+						<div class="mb-3">
+							<label for="setor-descricao" class="form-label">Descricão</label>
+							<textarea
+								required
+								id="setor-descricao"
+								class="form-control"
+								rows="4"
+								name="descricao"
+								placeholder="Ex.: Responsável pela fabricação e montagem dos motores que serão instalados nos veículos"
+							></textarea>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+						<button type="submit" class="btn btn-primary">Criar</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+	<div class="modal fade" id="modal-funcionario" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h1 class="modal-title fs-5" id="staticBackdropLabel">Novo funcionário</h1>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+				<form id="form-funcionario" class="mb-0">
+					<div class="modal-body">
+						<div class="mb-3">
+							<label for="funcionario-setor" class="form-label">Setor</label>
+							<select class="form-select" id="funcionario-setor" required>
+								<option selected value="">Escolha um setor</option>
+							</select>
+						</div>
+						<div class="mb-3">
+							<label for="funcionario-nome" class="form-label">Nome</label>
+							<input required id="funcionario-nome" name="nome" type="text" class="form-control" placeholder="Ex.: João da Silva"/>
+						</div>
+						<div class="mb-3">
+							<label for="funcionario-ano" class="form-label">Ano de nascimento</label>
+							<input required id="funcionario-nome" name="nome" type="number" class="form-control" placeholder="Ex.: 1992"/>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+						<button type="submit" class="btn btn-primary">Criar</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+	<div class="modal fade modal-lg" id="modal-funcionarios" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h1 class="modal-title fs-5" id="staticBackdropLabel">Funcionários</h1>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+				<div class="modal-body" id="funcionarios">
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+	<script>
+		const container = document.querySelector('#setores');
+		const modalFuncionarios = new bootstrap.Modal('#modal-funcionarios')
+		const containerFuncionarios = document.querySelector('#funcionarios')
+		const funcionarios = [
+			{
+				codigo: 1,
+				nome: 'Jéssica Isabella Teresinha da Rosa',
+				anoNascimento: 1992
+			},
+			{
+				codigo: 2,
+				nome: 'Stella Betina da Rocha',
+				anoNascimento: 1974
+			},
+			{
+				codigo: 3,
+				nome: 'Luís Nathan Henry Campos',
+				anoNascimento: 1995
+			},
+			{
+				codigo: 4,
+				nome: 'Miguel Diogo Manoel da Luz',
+				anoNascimento: 1953
+			},
+			{
+				codigo: 5,
+				nome: 'Luís Henry Lucca Almada',
+				anoNascimento: 1971
+			},
+		]
+		const setores = [
+			{
+				codigo: 1,
+				nome: 'Estamparia',
+				descricao: 'Onde as chapas de metal são cortadas e moldadas para formar as partes da carroceria do veículo.',
+				cor: 'blue'
+			},
+			{
+				codigo: 2,
+				nome: 'Soldagem',
+				descricao: 'As partes da carroceria são unidas por soldagem para formar a estrutura do carro.',
+				cor: 'red'
+			},
+			{
+				codigo: 3,
+				nome: 'Pintura',
+				descricao: 'A carroceria passa por um processo de pintura que inclui limpeza, aplicação de primer, pintura e acabamento.',
+				cor: 'green'
+			},
+			{
+				codigo: 4,
+				nome: 'Montagem',
+				descricao: 'Nesta etapa, todos os componentes do veículo, como motor, transmissão, suspensão, interior e sistemas elétricos, são montados na carroceria.',
+				cor: 'blue'
+			},
+			{
+
+				codigo: 5,
+				nome: 'Controle de Qualidade',
+				descricao: 'Verificação e testes rigorosos são realizados para garantir que o veículo atenda aos padrões de qualidade e segurança.',
+				cor: 'teal'
+			},
+			{
+				codigo: 6,
+				nome: 'Logística',
+				descricao: 'Gerencia o fluxo de materiais e componentes dentro da fábrica e a distribuição dos veículos prontos.',
+				cor: 'purple'
+			},
+			{
+				codigo: 7,
+				nome: 'Pesquisa e Desenvolvimento (P&D)',
+				descricao: 'Focado na inovação e melhoria contínua dos veículos e processos de fabricação.',
+				cor: 'navy'
+			},
+			{
+				codigo: 8,
+				nome: 'Manutenção',
+				descricao: 'Responsável pela manutenção e reparo das máquinas e equipamentos utilizados na produção.',
+				cor: 'gray'
+			},
+		]
+
+		function abrirModalFuncionarios(setor) {
+			console.log(setor)
+			containerFuncionarios.innerHTML = `
+				<div class="alert alert-secondary mb-0" role="alert">Nenhum funcionário cadastrado</div>
+			`
+			containerFuncionarios.innerHTML += `
+				<table class="table table-striped mb-0">
+					<thead>
+						<tr>
+							<th style="width: 60px">#</th>
+							<th>Nome</th>
+							<th style="width: 96px">Ano Nasc.</th>
+						</tr>
+					</thead>
+					<tbody>
+						${funcionarios.map(funcionario => `
+							<tr>
+								<th class="py-3">${funcionario.codigo}</th>
+								<td class="py-3">${funcionario.nome}</td>
+								<td class="py-3 text-end">${funcionario.anoNascimento}</td>
+							</tr>
+						`).join('')}
+					</tbody>
+				</table>
+			`
+
+			modalFuncionarios.show()
+		}
+
+		window.addEventListener('load', function() {
+			container.innerHTML = `
+				<div class="col-12">
+					<div class="alert alert-secondary mb-0" role="alert">
+						Nenhum setor cadastrado
+					</div>
+				</div>
+			`
+			container.innerHTML += setores.map(setor => `
+				<div class="col-12 col-md-6">
+					<div class="card" style="background-color: ${setor.cor}">
+						<h5 class="card-header">${setor.nome}</h5>
+						<div class="card-body">
+							<p class="card-text descricao">${setor.descricao}</p>
+						</div>
+						<div class="card-footer d-flex justify-content-end gap-2">
+							<button class="btn btn-outline-light btn-sm" onclick="abrirModalFuncionarios(${setor.codigo})">Funcionários</button>
+							<a class="btn btn-outline-light btn-sm" href="./detalhes.html?setor=${setor.codigo}">Denúncias</a>
+						</div>
+					</div>
+				</div>			
+			`).join('')
+		})
+	</script>
 </body>
 </html>
