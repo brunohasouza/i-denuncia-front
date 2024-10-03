@@ -20,7 +20,19 @@ function useRequest() {
 
 	const listarSetores = () => get(`${baseUrl}/setores`);
 
+	const listarFuncionarios = (setor) => get(`${baseUrl}/setores/${setor}/funcionarios`);
+
+	const buscaSetor = (codigo) => get(`${baseUrl}/setores/${codigo}`);
+
+	const listaDenuncias = () => get(`${baseUrl}/denuncias`);
+
+	const criarDenuncia = (funcionario, denuncia) => post(`${baseUrl}/denuncias`, { funcionario, denuncia });
+
 	return {
-		listarSetores
+		listarSetores,
+		listarFuncionarios,
+		buscaSetor,
+		listaDenuncias,
+		criarDenuncia
 	}
 }

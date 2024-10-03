@@ -28,6 +28,9 @@
 	<main class="pb-5">
 		<div class="container mb-4">
 			<h1 class="display-6 fw-normal text-center" id="setor-nome"></h1>
+			<div id="message">
+				<!-- SLOT - SUCESSO -->
+			</div>
 		</div>
 		<div class="container">
 			<form class="tab-content" id="form-denuncia">
@@ -52,73 +55,83 @@
 		</div>
 	</main>
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+	<script src="use-denunciar-view.js"></script>
+	<script src="use-request.js"></script>
 	<script>
-		const setorNome = document.querySelector('#setor-nome')
-		const containerFuncionarios = document.querySelector('#lista-funcionarios')
-		const containerDenuncias = document.querySelector('#lista-denuncias')
-		const tabFuncionario = document.querySelector('#tab-funcionario')
-		const tabDenuncia = document.querySelector('#tab-denuncia')
-		const formDenuncia = document.querySelector('#form-denuncia')
-		const btnVoltar = document.querySelector('#btn-voltar')
-
-		const setor = {
-			nome: 'Montagem de motores'
-		}
-		const funcionarios = Array(Math.round(Math.random() * 30)).fill(false).map(() => ({
-			codigo: 1,
-			nome: 'Jéssica Isabella Teresinha da Rosa',
-			anoNascimento: 1992
-		}))
-
-		const denuncias = [
-			{ codigo: 1, nome: 'Acidente' },
-			{ codigo: 2, nome: 'Assédio' },
-			{ codigo: 3, nome: 'Falha de equipamento' },
-			{ codigo: 4, nome: 'Falha de pessoal' },
-			{ codigo: 5, nome: 'Falta de insumo' },
-		]
+		const setorNome = document.querySelector('#setor-nome');
+		const mensagemEl = document.querySelector('#message');
+		const funcionariosEl = document.querySelector('#lista-funcionarios');
+		const denunciasEl = document.querySelector('#lista-denuncias');
+		const tabFuncionario = document.querySelector('#tab-funcionario');
+		const tabDenuncia = document.querySelector('#tab-denuncia');
+		const formDenuncia = document.querySelector('#form-denuncia');
+		const btnVoltar = document.querySelector('#btn-voltar');
+		const { listarFuncionarios, buscaSetor, listaDenuncias, criarDenuncia } = useRequest();
+		const { desenhaFuncionarios, alertaMensagem, desenhaDenuncias } = useDenunciarView();
 
 		function atribuiFuncionario() {
-			tabFuncionario.classList.remove('active')
-			tabDenuncia.classList.add('active')
+			tabFuncionario.classList.remove('active');
+			tabDenuncia.classList.add('active');
 		}
 
 		function atribuiDenuncia() {
-			formDenuncia.requestSubmit()
+			formDenuncia.requestSubmit();
 		}
 
 		btnVoltar.addEventListener('click', () => {
-			formDenuncia.reset()
-			tabDenuncia.classList.remove('active')
-			tabFuncionario.classList.add('active')
-		})
+			formDenuncia.reset();
+			tabDenuncia.classList.remove('active');
+			tabFuncionario.classList.add('active');
+		});
 
 		formDenuncia.addEventListener('submit', (ev) => {
-			ev.preventDefault()
-		})
+			ev.preventDefault();
+			const funcionario = parseInt(formDenuncia.funcionario.value);
+			const denuncia = parseInt(formDenuncia.denuncia.value);
+
+			criarDenuncia(funcionario, denuncia)
+				.then(() => {
+					localStorage.setItem('msg', 'Denúncia cadastrada com sucesso');
+					location.reload();
+				})
+				.catch(error => console.error(error));
+		});
 
 		window.addEventListener('load', function() {
-			const searchParams = new URLSearchParams(location.search)
+			const searchParams = new URLSearchParams(location.search);
+			const setorCodigo = searchParams.get('setor');
+			const msg = localStorage.getItem('msg');
 
-			if (!searchParams.get('setor')) {
-				return location.replace('/client')
+			if (!setorCodigo) {
+				return location.replace('/client');
 			}
 
-			setorNome.innerHTML = setor.nome;
+			if (msg) {
+				mensagemEl.innerHTML = alertaMensagem(msg);
+				localStorage.removeItem('msg');
+			}
 
-			containerFuncionarios.innerHTML = funcionarios.map((funcionario, index) => `
-				<div class="col-12 col-md-6">
-					<input onchange="atribuiFuncionario()" type="radio" class="btn-check" name="funcionario" required id="funcionario-${index}" value="${index + 1}">
-					<label class="btn btn-outline-secondary btn-lg" style="width: 100%" for="funcionario-${index}">${funcionario.nome}</label>
-				</div>
-			`).join('');
+			buscaSetor(setorCodigo)
+				.then(setor => setorNome.innerHTML = setor.nome)
+				.catch(error => {
+					console.error(error);
+					location.replace('/client');
+				});
 
-			containerDenuncias.innerHTML = denuncias.map((denuncia) => `
-				<div class="col-12 col-md-6">
-					<input onchange="atribuiDenuncia()" type="radio" class="btn-check" name="denuncia" required id="denuncia-${denuncia.codigo}" value="${denuncia.codigo}">
-					<label class="btn btn-outline-secondary btn-lg" style="width: 100%" for="denuncia-${denuncia.codigo}">${denuncia.nome}</label>
-				</div>
-			`).join('');
+			listarFuncionarios(setorCodigo)
+				.then(funcionarios => funcionariosEl.innerHTML = desenhaFuncionarios(funcionarios))
+				.catch(error => {
+					console.error(error);
+					funcionariosEl.innerHTML = desenhaFuncionarios([]);
+				});
+
+			listaDenuncias(setorCodigo)
+				.then(denuncias => denunciasEl.innerHTML = desenhaDenuncias(denuncias))
+				.catch(error => {
+					console.error(error);
+					denunciasEl.innerHTML = desenhaDenuncias([]);
+				});
+
 		})
 	</script>
 </body>

@@ -1,13 +1,11 @@
 function useIndexView() {
-	const alertaMensagem = (msg) => `<div class="alert alert-success" role="alert">${msg}</div>`
-
 	const nenhumSetor = () => `
 		<div class="col-12">
 			<div class="alert alert-secondary mb-0" role="alert">
 				Nenhum setor cadastrado
 			</div>
 		</div>
-	`
+	`;
 
   	const listaSetores = (setores) => setores.map(setor => `
 		<div class="col-12 col-md-6">
@@ -23,42 +21,11 @@ function useIndexView() {
 				</div>
 			</div>
 		</div>	
-	`).join('')
-
-	const nenhumFuncionario = () => `
-		<div class="alert alert-secondary mb-0" role="alert">
-			Nenhum setor cadastrado
-		</div>	
-	`
-
-	const listaFuncionarios = (funcionarios) => `
-		<table class="table table-striped mb-0">
-			<thead>
-				<tr>
-					<th style="width: 60px">#</th>
-					<th>Nome</th>
-					<th style="width: 96px">Ano Nasc.</th>
-				</tr>
-			</thead>
-			<tbody>
-				${funcionarios.map(funcionario => `
-					<tr>
-						<th class="py-3">${funcionario.codigo}</th>
-						<td class="py-3">${funcionario.nome}</td>
-						<td class="py-3 text-end">${funcionario.anoNascimento}</td>
-					</tr>
-				`).join('')}
-			</tbody>
-		</table>
-	`
+	`).join('');
 
 	const desenhaSetores = (setores) => setores?.length > 0 ? listaSetores(setores) : nenhumSetor()
 
-	const desenhaFuncionarios = (funcionarios) => funcionarios?.length > 0 ? listaFuncionarios(funcionarios) : nenhumFuncionario()
-
 	return {
-		alertaMensagem,
 		desenhaSetores,
-		desenhaFuncionarios,
 	}
 }
