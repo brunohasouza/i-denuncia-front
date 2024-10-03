@@ -17,8 +17,8 @@ liveReloadServer.server.once('connection', () => {
 
 app.use(connectLiveReload());
 
-// Servir arquivos estáticos
-app.use(express.static(path.join(__dirname, 'public')));
+app.use('/admin', express.static(path.join(__dirname, 'admin', 'scripts')));
+app.use('/client', express.static(path.join(__dirname, 'client', 'scripts')));
 
 app.get('/admin', (req, res) => {
     res.sendFile(path.join(__dirname, 'admin', 'index.html'));

@@ -50,21 +50,20 @@
 		<div class="container mb-4">
 			<h1 class="display-6 fw-normal text-center mb-0">Setores</h1>
 			<div id="message">
-				<div class="alert alert-success" role="alert">
-					Setor cadastrado com sucesso
-			  	</div>
+				<!-- SLOT - SUCESSO -->
 			</div>
 		</div>
 		<div class="container">
 			<div class="row g-3" id="setores">
+				<!-- SLOT - LISTA SETORES -->
 			</div>
 		</div>
 	</main>
-	<div class="modal fade" id="modal-setor" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+	<div class="modal fade" id="modal-setor" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h1 class="modal-title fs-5" id="staticBackdropLabel">Novo setor</h1>
+					<h1 class="modal-title fs-5">Novo setor</h1>
 					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 				</div>
 				<form id="form-setor" class="mb-0">
@@ -97,19 +96,19 @@
 			</div>
 		</div>
 	</div>
-	<div class="modal fade" id="modal-funcionario" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+	<div class="modal fade" id="modal-funcionario" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h1 class="modal-title fs-5" id="staticBackdropLabel">Novo funcionário</h1>
+					<h1 class="modal-title fs-5">Novo funcionário</h1>
 					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 				</div>
 				<form id="form-funcionario" class="mb-0">
 					<div class="modal-body">
 						<div class="mb-3">
 							<label for="funcionario-setor" class="form-label">Setor</label>
-							<select class="form-select" id="funcionario-setor" required>
-								<option selected value="">Escolha um setor</option>
+							<select class="form-select" id="funcionario-setor" name="setor" required>
+								<!-- SLOT - SELECT DE SETORES -->
 							</select>
 						</div>
 						<div class="mb-3">
@@ -117,8 +116,8 @@
 							<input required id="funcionario-nome" name="nome" type="text" class="form-control" placeholder="Ex.: João da Silva"/>
 						</div>
 						<div class="mb-3">
-							<label for="funcionario-ano" class="form-label">Ano de nascimento</label>
-							<input required id="funcionario-nome" name="nome" type="number" class="form-control" placeholder="Ex.: 1992"/>
+							<label for="funcionario-nascimento" class="form-label">Ano de nascimento</label>
+							<input required id="funcionario-nascimento" name="nascimento" type="number" class="form-control" placeholder="Ex.: 1992"/>
 						</div>
 					</div>
 					<div class="modal-footer">
@@ -129,14 +128,15 @@
 			</div>
 		</div>
 	</div>
-	<div class="modal fade modal-lg" id="modal-funcionarios" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+	<div class="modal fade modal-lg" id="modal-funcionarios" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h1 class="modal-title fs-5" id="staticBackdropLabel">Funcionários</h1>
+					<h1 class="modal-title fs-5">Funcionários</h1>
 					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 				</div>
 				<div class="modal-body" id="funcionarios">
+					<!-- SLOT - LISTA DE FUNCIONÁRIOS -->
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
@@ -145,140 +145,83 @@
 		</div>
 	</div>
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+	<script src="use-index-view.js"></script>
+	<script src="use-request.js"></script>
 	<script>
-		const container = document.querySelector('#setores');
-		const modalFuncionarios = new bootstrap.Modal('#modal-funcionarios')
-		const containerFuncionarios = document.querySelector('#funcionarios')
-		const funcionarios = [
-			{
-				codigo: 1,
-				nome: 'Jéssica Isabella Teresinha da Rosa',
-				anoNascimento: 1992
-			},
-			{
-				codigo: 2,
-				nome: 'Stella Betina da Rocha',
-				anoNascimento: 1974
-			},
-			{
-				codigo: 3,
-				nome: 'Luís Nathan Henry Campos',
-				anoNascimento: 1995
-			},
-			{
-				codigo: 4,
-				nome: 'Miguel Diogo Manoel da Luz',
-				anoNascimento: 1953
-			},
-			{
-				codigo: 5,
-				nome: 'Luís Henry Lucca Almada',
-				anoNascimento: 1971
-			},
-		]
-		const setores = [
-			{
-				codigo: 1,
-				nome: 'Estamparia',
-				descricao: 'Onde as chapas de metal são cortadas e moldadas para formar as partes da carroceria do veículo.',
-				cor: 'blue'
-			},
-			{
-				codigo: 2,
-				nome: 'Soldagem',
-				descricao: 'As partes da carroceria são unidas por soldagem para formar a estrutura do carro.',
-				cor: 'red'
-			},
-			{
-				codigo: 3,
-				nome: 'Pintura',
-				descricao: 'A carroceria passa por um processo de pintura que inclui limpeza, aplicação de primer, pintura e acabamento.',
-				cor: 'green'
-			},
-			{
-				codigo: 4,
-				nome: 'Montagem',
-				descricao: 'Nesta etapa, todos os componentes do veículo, como motor, transmissão, suspensão, interior e sistemas elétricos, são montados na carroceria.',
-				cor: 'blue'
-			},
-			{
+		const setoresEl = document.querySelector('#setores');
+		const mensagemEl = document.querySelector('#message');
+		const funcionariosEl = document.querySelector('#funcionarios');
+		const setorSel = document.querySelector('#funcionario-setor');
+		const setorForm = document.querySelector('#form-setor');
+		const funcionarioForm = document.querySelector('#form-funcionario');
+		
+		const funcionariosModal = new bootstrap.Modal('#modal-funcionarios');
 
-				codigo: 5,
-				nome: 'Controle de Qualidade',
-				descricao: 'Verificação e testes rigorosos são realizados para garantir que o veículo atenda aos padrões de qualidade e segurança.',
-				cor: 'teal'
-			},
-			{
-				codigo: 6,
-				nome: 'Logística',
-				descricao: 'Gerencia o fluxo de materiais e componentes dentro da fábrica e a distribuição dos veículos prontos.',
-				cor: 'purple'
-			},
-			{
-				codigo: 7,
-				nome: 'Pesquisa e Desenvolvimento (P&D)',
-				descricao: 'Focado na inovação e melhoria contínua dos veículos e processos de fabricação.',
-				cor: 'navy'
-			},
-			{
-				codigo: 8,
-				nome: 'Manutenção',
-				descricao: 'Responsável pela manutenção e reparo das máquinas e equipamentos utilizados na produção.',
-				cor: 'gray'
-			},
-		]
+		const { listarSetores, listarFuncionarios, criarSetor, criarFuncionario } = useRequest();
+		const { desenhaSetores, alertaMensagem, desenhaFuncionarios, desenhaOptions } = useIndexView();
 
 		function abrirModalFuncionarios(setor) {
-			console.log(setor)
-			containerFuncionarios.innerHTML = `
-				<div class="alert alert-secondary mb-0" role="alert">Nenhum funcionário cadastrado</div>
-			`
-			containerFuncionarios.innerHTML += `
-				<table class="table table-striped mb-0">
-					<thead>
-						<tr>
-							<th style="width: 60px">#</th>
-							<th>Nome</th>
-							<th style="width: 96px">Ano Nasc.</th>
-						</tr>
-					</thead>
-					<tbody>
-						${funcionarios.map(funcionario => `
-							<tr>
-								<th class="py-3">${funcionario.codigo}</th>
-								<td class="py-3">${funcionario.nome}</td>
-								<td class="py-3 text-end">${funcionario.anoNascimento}</td>
-							</tr>
-						`).join('')}
-					</tbody>
-				</table>
-			`
+			listarFuncionarios(setor)
+				.then(funcionarios => funcionariosEl.innerHTML = desenhaFuncionarios(funcionarios))
+				.catch(error => {
+					console.error(error)
+					funcionariosEl.innerHTML = desenhaFuncionarios([])
+				});
 
-			modalFuncionarios.show()
+			funcionariosModal.show();
 		}
 
+		setorForm.addEventListener('submit', (ev) => {
+			ev.preventDefault();
+
+			const body = {
+				nome: setorForm.nome.value,
+				cor: setorForm.cor.value,
+				descricao: setorForm.descricao.value
+			}
+
+			criarSetor(body)
+				.then(() => {
+					localStorage.setItem('msg', 'Setor criado com sucesso');
+					location.reload();
+				})
+				.catch(error => console.error(error));
+		})
+
+		funcionarioForm.addEventListener('submit', (ev) => {
+			ev.preventDefault();
+
+			const body = {
+				setor: parseInt(funcionarioForm.setor.value),
+				nome: funcionarioForm.nome.value,
+				anoNascimento: parseInt(funcionarioForm.nascimento.value)
+			}
+
+			criarFuncionario(body)
+				.then(() => {
+					localStorage.setItem('msg', 'Funcionário criado com sucesso');
+					location.reload();
+				})
+				.catch(error => console.error(error))
+		})
+
 		window.addEventListener('load', function() {
-			container.innerHTML = `
-				<div class="col-12">
-					<div class="alert alert-secondary mb-0" role="alert">
-						Nenhum setor cadastrado
-					</div>
-				</div>
-			`
-			container.innerHTML += setores.map(setor => `
-				<div class="col-12 col-md-6">
-					<div class="card" style="background-color: ${setor.cor}">
-						<h5 class="card-header">${setor.nome}</h5>
-						<div class="card-body">
-							<p class="card-text descricao">${setor.descricao}</p>
-						</div>
-						<div class="card-footer d-flex justify-content-end gap-2">
-							<button class="btn btn-outline-light btn-sm" onclick="abrirModalFuncionarios(${setor.codigo})">Funcionários</button>
-							<a class="btn btn-outline-light btn-sm" href="/admin/denuncias?setor=${setor.codigo}">Denúncias</a>
-						</div>
-					</div>
-				</div>			
-			`).join('')
+			const msg = localStorage.getItem('msg');
+
+			if (msg) {
+				mensagemEl.innerHTML = alertaMensagem(msg);
+				localStorage.removeItem('msg');
+			}
+
+			listarSetores()
+				.then(listaSetores => {
+					setoresEl.innerHTML = desenhaSetores(listaSetores);
+					setorSel.innerHTML = desenhaOptions(listaSetores);
+				})
+				.catch(error => {
+					console.error(error)
+					setoresEl.innerHTML = desenhaSetores([])
+				});
 		})
 	</script>
 </body>
