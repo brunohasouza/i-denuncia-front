@@ -1,0 +1,98 @@
+use idenuncia;
+
+-- SETOR
+insert into setor(nome, descricao, cor) values('Pintura', 'A carroceria passa por um processo de pintura que inclui limpeza, aplicação de primer, pintura e acabamento.', '#B32428');
+insert into setor(nome, descricao, cor) values('Estamparia', 'Onde as chapas de metal são cortadas e moldadas para formar as partes da carroceria do veículo.', '#317F43');
+insert into setor(nome, descricao, cor) values('Montagem', 'Nesta etapa, todos os componentes do veículo, como motor, transmissão, suspensão, interior e sistemas elétricos, são montados na carroceria.', '#102C54');
+insert into setor(nome, descricao, cor) values('Soldagem', 'As partes da carroceria são unidas por soldagem para formar a estrutura do carro.', '#606E8C');
+
+-- DENUNCIA
+insert into denuncia(tipo) values('FALHA_EQUIPAMENTO');
+insert into denuncia(tipo) values('FALTA_INSUMO');
+insert into denuncia(tipo) values('ASSEDIO');
+insert into denuncia(tipo) values('FALHA_PESSOAL');
+insert into denuncia(tipo) values('ACIDENTE');
+
+-- FUNCIONARIO
+insert into funcionario(nome, ano_nascimento, setor_codigo) values('Ramiro Ullrich', 2008, 2);
+insert into funcionario(nome, ano_nascimento, setor_codigo) values('Ms. Kay Reinger', 1976, 3);
+insert into funcionario(nome, ano_nascimento, setor_codigo) values('Leslie Flatley DDS', 1998, 3);
+insert into funcionario(nome, ano_nascimento, setor_codigo) values('Lydia Bartell MD', 2011, 3);
+insert into funcionario(nome, ano_nascimento, setor_codigo) values('Lamar Hamill', 1976, 2);
+insert into funcionario(nome, ano_nascimento, setor_codigo) values('Marc Rippin DVM', 1968, 2);
+insert into funcionario(nome, ano_nascimento, setor_codigo) values('Dianne Nicolas', 2001, 4);
+insert into funcionario(nome, ano_nascimento, setor_codigo) values('Renee Murazik', 1998, 3);
+insert into funcionario(nome, ano_nascimento, setor_codigo) values('Lionel Wiegand', 1992, 2);
+insert into funcionario(nome, ano_nascimento, setor_codigo) values('Sheila Schneider', 2011, 4);
+insert into funcionario(nome, ano_nascimento, setor_codigo) values('Mrs. Gail Keebler', 1987, 1);
+insert into funcionario(nome, ano_nascimento, setor_codigo) values('Nancy Roberts', 2011, 2);
+insert into funcionario(nome, ano_nascimento, setor_codigo) values('Lowell Haag', 2019, 1);
+insert into funcionario(nome, ano_nascimento, setor_codigo) values('Evan Daugherty', 2006, 1);
+insert into funcionario(nome, ano_nascimento, setor_codigo) values('Henry Labadie', 2005, 4);
+insert into funcionario(nome, ano_nascimento, setor_codigo) values('Mr. Miguel Schiller', 1989, 4);
+insert into funcionario(nome, ano_nascimento, setor_codigo) values('Byron Schimmel', 2000, 3);
+insert into funcionario(nome, ano_nascimento, setor_codigo) values('Dr. Eric Miller', 2001, 2);
+insert into funcionario(nome, ano_nascimento, setor_codigo) values('Viola Mann', 2024, 4);
+insert into funcionario(nome, ano_nascimento, setor_codigo) values('Pete Raynor', 1999, 2);
+insert into funcionario(nome, ano_nascimento, setor_codigo) values('Ralph Cruickshank', 1974, 3);
+insert into funcionario(nome, ano_nascimento, setor_codigo) values('Casey Wolff', 2021, 4);
+insert into funcionario(nome, ano_nascimento, setor_codigo) values('Sara Sipes Connell', 2020, 1);
+insert into funcionario(nome, ano_nascimento, setor_codigo) values('Ross Rempel', 2001, 3);
+insert into funcionario(nome, ano_nascimento, setor_codigo) values('Annette Gulgowski DVM', 1971, 3);
+insert into funcionario(nome, ano_nascimento, setor_codigo) values('Don Kertzmann', 2017, 2);
+insert into funcionario(nome, ano_nascimento, setor_codigo) values('Dr. Peter Ferry', 1975, 1);
+insert into funcionario(nome, ano_nascimento, setor_codigo) values('Lowell Wisozk', 2001, 2);
+insert into funcionario(nome, ano_nascimento, setor_codigo) values('Candice Sporer', 1994, 2);
+insert into funcionario(nome, ano_nascimento, setor_codigo) values('Olivia Gislason', 1975, 1);
+
+-- DENUNCIA_FUNCIONARIO
+insert into denuncia_funcionario(denuncia_codigo, funcionario_codigo, data_criacao) values(2, 12, '2022-11-21');
+insert into denuncia_funcionario(denuncia_codigo, funcionario_codigo, data_criacao) values(1, 24, '2023-06-23');
+insert into denuncia_funcionario(denuncia_codigo, funcionario_codigo, data_criacao) values(4, 16, '2023-01-30');
+insert into denuncia_funcionario(denuncia_codigo, funcionario_codigo, data_criacao) values(3, 2, '2022-10-11');
+insert into denuncia_funcionario(denuncia_codigo, funcionario_codigo, data_criacao) values(4, 1, '2024-08-30');
+insert into denuncia_funcionario(denuncia_codigo, funcionario_codigo, data_criacao) values(2, 29, '2024-07-29');
+insert into denuncia_funcionario(denuncia_codigo, funcionario_codigo, data_criacao) values(2, 3, '2022-10-31');
+insert into denuncia_funcionario(denuncia_codigo, funcionario_codigo, data_criacao) values(4, 20, '2024-02-19');
+insert into denuncia_funcionario(denuncia_codigo, funcionario_codigo, data_criacao) values(3, 7, '2024-01-10');
+insert into denuncia_funcionario(denuncia_codigo, funcionario_codigo, data_criacao) values(3, 3, '2023-08-25');
+insert into denuncia_funcionario(denuncia_codigo, funcionario_codigo, data_criacao) values(3, 6, '2023-03-04');
+insert into denuncia_funcionario(denuncia_codigo, funcionario_codigo, data_criacao) values(5, 29, '2024-04-30');
+insert into denuncia_funcionario(denuncia_codigo, funcionario_codigo, data_criacao) values(5, 5, '2023-09-28');
+insert into denuncia_funcionario(denuncia_codigo, funcionario_codigo, data_criacao) values(1, 21, '2024-05-21');
+insert into denuncia_funcionario(denuncia_codigo, funcionario_codigo, data_criacao) values(5, 19, '2023-01-12');
+insert into denuncia_funcionario(denuncia_codigo, funcionario_codigo, data_criacao) values(3, 22, '2024-06-13');
+insert into denuncia_funcionario(denuncia_codigo, funcionario_codigo, data_criacao) values(5, 30, '2023-04-12');
+insert into denuncia_funcionario(denuncia_codigo, funcionario_codigo, data_criacao) values(3, 2, '2022-10-29');
+insert into denuncia_funcionario(denuncia_codigo, funcionario_codigo, data_criacao) values(3, 14, '2023-07-11');
+insert into denuncia_funcionario(denuncia_codigo, funcionario_codigo, data_criacao) values(2, 10, '2023-12-27');
+insert into denuncia_funcionario(denuncia_codigo, funcionario_codigo, data_criacao) values(1, 27, '2023-10-03');
+insert into denuncia_funcionario(denuncia_codigo, funcionario_codigo, data_criacao) values(2, 19, '2023-01-20');
+insert into denuncia_funcionario(denuncia_codigo, funcionario_codigo, data_criacao) values(2, 29, '2024-03-15');
+insert into denuncia_funcionario(denuncia_codigo, funcionario_codigo, data_criacao) values(1, 4, '2024-09-15');
+insert into denuncia_funcionario(denuncia_codigo, funcionario_codigo, data_criacao) values(1, 9, '2023-02-21');
+insert into denuncia_funcionario(denuncia_codigo, funcionario_codigo, data_criacao) values(5, 28, '2023-07-05');
+insert into denuncia_funcionario(denuncia_codigo, funcionario_codigo, data_criacao) values(3, 23, '2024-09-13');
+insert into denuncia_funcionario(denuncia_codigo, funcionario_codigo, data_criacao) values(1, 6, '2023-06-22');
+insert into denuncia_funcionario(denuncia_codigo, funcionario_codigo, data_criacao) values(1, 14, '2023-08-23');
+insert into denuncia_funcionario(denuncia_codigo, funcionario_codigo, data_criacao) values(3, 26, '2023-04-01');
+insert into denuncia_funcionario(denuncia_codigo, funcionario_codigo, data_criacao) values(5, 26, '2022-12-11');
+insert into denuncia_funcionario(denuncia_codigo, funcionario_codigo, data_criacao) values(4, 26, '2024-05-04');
+insert into denuncia_funcionario(denuncia_codigo, funcionario_codigo, data_criacao) values(4, 23, '2023-03-07');
+insert into denuncia_funcionario(denuncia_codigo, funcionario_codigo, data_criacao) values(4, 12, '2023-07-21');
+insert into denuncia_funcionario(denuncia_codigo, funcionario_codigo, data_criacao) values(5, 11, '2023-06-03');
+insert into denuncia_funcionario(denuncia_codigo, funcionario_codigo, data_criacao) values(5, 6, '2024-08-05');
+insert into denuncia_funcionario(denuncia_codigo, funcionario_codigo, data_criacao) values(1, 20, '2022-12-27');
+insert into denuncia_funcionario(denuncia_codigo, funcionario_codigo, data_criacao) values(3, 3, '2024-09-18');
+insert into denuncia_funcionario(denuncia_codigo, funcionario_codigo, data_criacao) values(2, 25, '2024-04-26');
+insert into denuncia_funcionario(denuncia_codigo, funcionario_codigo, data_criacao) values(4, 4, '2022-10-13');
+insert into denuncia_funcionario(denuncia_codigo, funcionario_codigo, data_criacao) values(3, 28, '2023-04-13');
+insert into denuncia_funcionario(denuncia_codigo, funcionario_codigo, data_criacao) values(4, 22, '2024-07-03');
+insert into denuncia_funcionario(denuncia_codigo, funcionario_codigo, data_criacao) values(2, 1, '2022-10-22');
+insert into denuncia_funcionario(denuncia_codigo, funcionario_codigo, data_criacao) values(5, 10, '2023-04-23');
+insert into denuncia_funcionario(denuncia_codigo, funcionario_codigo, data_criacao) values(5, 26, '2023-06-30');
+insert into denuncia_funcionario(denuncia_codigo, funcionario_codigo, data_criacao) values(4, 16, '2024-08-24');
+insert into denuncia_funcionario(denuncia_codigo, funcionario_codigo, data_criacao) values(2, 11, '2023-02-05');
+insert into denuncia_funcionario(denuncia_codigo, funcionario_codigo, data_criacao) values(2, 22, '2024-04-12');
+insert into denuncia_funcionario(denuncia_codigo, funcionario_codigo, data_criacao) values(3, 11, '2023-07-12');
+insert into denuncia_funcionario(denuncia_codigo, funcionario_codigo, data_criacao) values(5, 21, '2022-11-21');
